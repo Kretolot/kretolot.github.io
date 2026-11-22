@@ -98,8 +98,26 @@ function frame(t,W,H,aspect,fps){
   const txt=(row,col,s,k)=>{for(let j=0;j<s.length;j++){const c=col+j;if(c>=0&&c<W){if(s[j]==' ')K[row*W+c]=-1;else set(row*W+c,s[j],k)}}};
   // napis i HUD
   const cp=[196,40,226,231,39];
-  LINES.forEach((ln,r)=>{const c0=(W-ln.length)/2|0;for(let j=0;j<ln.length;j++){const x=c0+j;if(x<0||x>=W)continue;const i=(r+1)*W+x;if(ln[j]==' ')K[i]=-1;else set(i,ln[j],cp[(j+(t*2|0))%5])}});
-  return{C,K,glows:lc.filter(([i,,,ch,k])=>C[i]===ch&&K[i]===k),star:[scx,scy]};
+  const mobile = W < 80;
+  const textStart = mobile
+    ? M.max(1, star[1] - LINES.length + 2)
+    : 1;
+
+  LINES.forEach((ln,r)=>{
+    const c0=(W-ln.length)/2|0;
+    const row=textStart+r;
+
+    for(let j=0;j<ln.length;j++){
+      const x=c0+j;
+      if(x<0||x>=W)continue;
+      const i=row*W+x;
+
+      if(ln[j]==' ')K[i]=-1;
+      else set(i,ln[j],cp[(j+(t*2|0))%5]);
+    }
+});
+
+return{C,K,glows:lc.filter(([i,,,ch,k])=>C[i]===ch&&K[i]===k),star:[scx,scy]};
 }
 
 // ---- rysowanie na canvasie ----
