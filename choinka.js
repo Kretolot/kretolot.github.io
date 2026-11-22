@@ -100,8 +100,8 @@ function frame(t,W,H,aspect,fps){
   const cp=[196,40,226,231,39];
   const mobile = window.innerWidth <= 768;
   const textStart = mobile
-    ? M.max(1, star[1] - LINES.length + 2)
-    : 1;
+  ? M.max(1, Math.floor(H * 0.20))
+  : 1;
 
   LINES.forEach((ln,r)=>{
     const c0=(W-ln.length)/2|0;
