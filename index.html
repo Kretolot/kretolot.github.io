@@ -11,7 +11,7 @@
 <canvas id="c"></canvas>
 <script>
 // ---- ustawienia ----
-const CAPTION="WESOŁYCH ŚWIĄT MILENA", NG=9, NL=170, NF=300, SPIN=.55, T0=1, GAP=.9, HOLD=9, FALL=.9;
+const LINES=["Wesolych Swiat Milena!","Duzo zdrowia i szczescia","Spelnienia marzen","I wszystkiego najlepszego od Gwiazdora"], NG=9, NL=170, NF=300, SPIN=.55, T0=1, GAP=.9, HOLD=9, FALL=.9;
 // ---- stałe ----
 const TAU=Math.PI*2, TILT=.2, CT=Math.cos(TILT), ST=Math.sin(TILT), M=Math;
 const CD=".:'`,", CM="vxo%&", CB="WXS#@", KD=[22,22,28,23,22], KM=[28,34,34,40,28], KB=[40,46,82,118,46];
@@ -62,7 +62,7 @@ function build(sc){
 
 // ---- klatka: siatka znaków ----
 function frame(t,W,H,aspect,fps){
-  const top=1,bottom=H-6,area=bottom-top,sc=M.max(1.2,M.min(area/9.4,W/(10.5*aspect))),S=build(sc);
+  const top=LINES.length+3,bottom=H-6,area=bottom-top,sc=M.max(1.2,M.min(area/9.4,W/(10.5*aspect))),S=build(sc);
   const sxs=aspect*sc,base=bottom-sc,mid=W/2,ang=t*SPIN,ca=M.cos(ang),sa=M.sin(ang),n=W*H,lim=H-5;
   const C=new Array(n).fill(null),K=new Int16Array(n).fill(-1),zb=new Float32Array(n).fill(-1e9),tw=new Array(n).fill(null);
   const set=(i,ch,k)=>{C[i]=ch;K[i]=k};
@@ -108,8 +108,8 @@ function frame(t,W,H,aspect,fps){
   let letters=0;for(let i=0;i<n;i++)if(K[i]>=0)letters++;
   const txt=(row,col,s,k)=>{for(let j=0;j<s.length;j++){const c=col+j;if(c>=0&&c<W){if(s[j]==' ')K[row*W+c]=-1;else set(row*W+c,s[j],k)}}};
     // napis i HUD
-  const sp=CAPTION.split('').join(' '),cp=[196,40,226,231,39],c0=(W-sp.length)/2|0;
-  for(let j=0;j<sp.length;j++){const i=c0+j;;if(sp[j]==' ')K[i]=-1;else set(i,sp[j],cp[((j>>1)+(t*2|0))%5])}
+  const cp=[196,40,226,231,39];
+LINES.forEach((ln,r)=>{const c0=(W-ln.length)/2|0;for(let j=0;j<ln.length;j++){const x=c0+j;if(x<0||x>=W)continue;const i=(r+1)*W+x;if(ln[j]==' ')K[i]=-1;else set(i,ln[j],cp[(j+(t*2|0))%5])}});
   return{C,K,glows:lc.filter(([i,,,ch,k])=>C[i]===ch&&K[i]===k),star:[scx,scy]};
 }
 
