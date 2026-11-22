@@ -1,6 +1,6 @@
 // Choinka ASCII 3D - skrypt zewnętrzny. Życzenia edytujesz w tablicy LINES poniżej.
 // ---- ustawienia ----
-const LINES=["Wesolych Swiat!","Duzo zdrowia i szczescia","Spelnienia marzen","I wszystkiego najlepszego ode mnie"], NG=9, NL=170, NF=300, SPIN=.55, T0=1, GAP=.9, HOLD=9, FALL=.9;
+const LINES=["Wesolych Swiat Milena!","Duzo zdrowia i szczescia","Spelnienia marzen","I wszystkiego najlepszego ode mnie"], NG=9, NL=170, NF=300, SPIN=.55, T0=1, GAP=.9, HOLD=9, FALL=.9;
 // ---- stałe ----
 const TAU=Math.PI*2, TILT=.2, CT=Math.cos(TILT), ST=Math.sin(TILT), M=Math;
 const CD=".:'`,", CM="vxo%&", CB="WXS#@", KD=[22,22,28,23,22], KM=[28,34,34,40,28], KB=[40,46,82,118,46];
