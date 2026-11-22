@@ -110,7 +110,7 @@ function frame(t,W,H,aspect,fps){
     // napis i HUD
   const sp=CAPTION.split('').join(' '),cp=[196,40,226,231,39],c0=(W-sp.length)/2|0;
   for(let j=0;j<sp.length;j++){const i=c0+j;;if(sp[j]==' ')K[i]=-1;else set(i,sp[j],cp[((j>>1)+(t*2|0))%5])}
-  txt(0,W-10,`t ${t.toFixed(2).padStart(5)}s`,214
+  txt(0,W-10,`t ${t.toFixed(2).padStart(5)}s`,214)
   return{C,K,glows:lc.filter(([i,,,ch,k])=>C[i]===ch&&K[i]===k),star:[scx,scy]};
 }
 
