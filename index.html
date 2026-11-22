@@ -107,14 +107,6 @@ function frame(t,W,H,aspect,fps){
     if(zb[i]<-1e8&&r<H-5)ly==0?set(i,'.',244):ly==1?set(i,'+',250):set(i,sp>.9?'*':'+',255)}
   let letters=0;for(let i=0;i<n;i++)if(K[i]>=0)letters++;
   const txt=(row,col,s,k)=>{for(let j=0;j<s.length;j++){const c=col+j;if(c>=0&&c<W){if(s[j]==' ')K[row*W+c]=-1;else set(row*W+c,s[j],k)}}};
-  // napis i HUD
-  const sp=CAPTION.split('').join(' '),cp=[196,40,226,231,39],c0=(W-sp.length)/2|0;
-  for(let j=0;j<sp.length;j++){const i=(H-5)*W+c0+j;if(sp[j]==' ')K[i]=-1;else set(i,sp[j],cp[((j>>1)+(t*2|0))%5])}
-  txt(0,W-10,`t ${t.toFixed(2).padStart(5)}s`,214);
-  txt(H-3,2,`rotation ${(ang*180/M.PI%360).toFixed(2).padStart(6)}°`,244);
-  txt(H-2,2,`lights   ${NL}`,244);
-  txt(H-1,2,`letters  ${letters.toLocaleString('en-US')}`,244);
-  const rt=`running · ${fps.toFixed(0)} fps`;txt(H-1,W-rt.length-2,rt,108);
   return{C,K,glows:lc.filter(([i,,,ch,k])=>C[i]===ch&&K[i]===k),star:[scx,scy]};
 }
 
