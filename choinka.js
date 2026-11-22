@@ -1,3 +1,11 @@
+/*! Choinka ASCII 3D - zewnętrzny skrypt.
+ *  Użycie:
+ *    <div id="choinka" style="height:600px"></div>
+ *    <script src="choinka.js"></script>
+ *  Opcje (atrybuty data-* na elemencie #choinka):
+ *    data-caption="WESOLYCH SWIAT"  data-gifts="9"  data-lights="170"  data-snow="300"  data-spin="0.55"
+ *  Bez elementu #choinka wypełnia całą stronę.
+ */
 (function(){
 function main(){
 const M=Math;
@@ -53,13 +61,13 @@ function build(sc){
   loc.push([0,0,1.15,1,1],[0,0,1.3,1,0]);
   const GB=[27,196,34,129,208,39,160,205,178], GR=[231,220,220,231,231,220,231,220,196], ord=[0,5,2,7,4,1,8,3,6];
   const gifts=ord.slice(0,NG).map((slot,i)=>{const a=TAU*slot/NG+(r()*.24-.12),rd=3.7+r()*1.1;
-    return{cx:rd*M.cos(a),cy:rd*M.sin(a),s:.55+r()*.35,yaw:r()*TAU,b:GB[i%9],rb:GR[i%9],t0:T0+i*GAP}});
+    return{cx:rd*M.cos(a),cy:rd*M.sin(a),s:.55+r()*.35,yaw:r()*TAU,w:(i%2?1:-1)*(.5+r()*.7),b:GB[i%9],rb:GR[i%9],t0:T0+i*GAP}});
   for(let i=0;i<NF;i++)flakes.push([r(),r(),.35+r()*.95,r()*TAU,r()*3|0]);
   return cache[key]={tree,trunk,lights,garland,star,loc,gifts,flakes};
 }
 
 // ---- klatka: siatka znaków ----
-function frame(t,W,H,aspect,fps,hint){
+function frame(t,W,H,aspect,fps){
   const top=1,bottom=H-6,area=bottom-top,sc=M.max(1.2,M.min(area/9.4,W/(10.5*aspect))),S=build(sc);
   const sxs=aspect*sc,base=bottom-sc,mid=W/2,ang=t*SPIN,ca=M.cos(ang),sa=M.sin(ang),n=W*H,lim=H-5;
   const C=new Array(n).fill(null),K=new Int16Array(n).fill(-1),zb=new Float32Array(n).fill(-1e9),tw=new Array(n).fill(null);
@@ -84,9 +92,9 @@ function frame(t,W,H,aspect,fps,hint){
   const sk=M.sin(t*5)>-.3?226:229;
   for(const[x,y,z]of S.star)plot(x,y,z,'#',sk,.3);
   // prezenty
-  const tt=t%(T0+NG*GAP+HOLD);
+  const tt=t;
   for(const g of S.gifts){if(tt<g.t0)continue;
-    const p=M.min(1,(tt-g.t0)/FALL),zo=7*(1-bounce(p)),s=g.s*M.min(1,.35+p*3),c=M.cos(g.yaw),sn=M.sin(g.yaw);
+    const p=M.min(1,(tt-g.t0)/FALL),zo=7*(1-bounce(p)),s=g.s*M.min(1,.35+p*3),yw=g.yaw+t*g.w,c=M.cos(yw),sn=M.sin(yw);
     for(const[lx,ly,lz,rb,par]of S.loc){const x=(lx*c-ly*sn)*s+g.cx,y=(lx*sn+ly*c)*s+g.cy,z=lz*s+zo;
       if(rb)plot(x,y,z,par?'=':'+',g.rb,.02);else plot(x,y,z,par?'X':'#',g.b,0)}}
   // cieniowanie choinki
@@ -105,7 +113,6 @@ function frame(t,W,H,aspect,fps,hint){
     if(zb[i]<-1e8&&r<H-5)ly==0?set(i,'.',244):ly==1?set(i,'+',250):set(i,sp>.9?'*':'+',255)}
   let letters=0;for(let i=0;i<n;i++)if(K[i]>=0)letters++;
   const txt=(row,col,s,k)=>{for(let j=0;j<s.length;j++){const c=col+j;if(c>=0&&c<W){if(s[j]==' ')K[row*W+c]=-1;else set(row*W+c,s[j],k)}}};
-  // napis i HUD
   return{C,K,glows:lc.filter(([i,,,ch,k])=>C[i]===ch&&K[i]===k),star:[scx,scy]};
 }
 
@@ -124,16 +131,11 @@ function setup(){
   bg=ctx.createLinearGradient(0,0,0,vh);bg.addColorStop(0,'#0b142e');bg.addColorStop(1,'#04060c');
 }
 window.ResizeObserver?new ResizeObserver(setup).observe(host):addEventListener('resize',setup);setup();
-let t=0,last=performance.now(),paused=false,fps=60,started=last;
-cv.addEventListener('keydown',e=>{const k=e.key.toLowerCase();
-  if(k==' '){paused=!paused;e.preventDefault()}else if(k=='r'){t=0;started=performance.now()}
-  else if(k=='+'||k=='='){mul=M.min(2.5,mul*1.12);setup()}else if(k=='-'){mul=M.max(.5,mul/1.12);setup()}
-  else if(k=='f'){document.fullscreenElement?document.exitFullscreen():(full?document.documentElement:host).requestFullscreen()}});
-cv.addEventListener('dblclick',()=>document.fullscreenElement?document.exitFullscreen():(full?document.documentElement:host).requestFullscreen());cv.addEventListener('mousedown',()=>cv.focus());
+let t=0,last=performance.now(),fps=60;
 const sky=Array.from({length:80},()=>[Math.random(),Math.random()*.6,Math.random()*TAU]);
 function loop(now){
-  const dt=(now-last)/1000;last=now;if(dt>0)fps=fps*.95+(1/dt)*.05;if(!paused)t+=M.min(dt,.1);
-  const{C,K,glows,star}=frame(t,W,H,chh/cw,fps,now-started<8000);
+  const dt=(now-last)/1000;last=now;if(dt>0)fps=fps*.95+(1/dt)*.05;t+=M.min(dt,.1);
+  const{C,K,glows,star}=frame(t,W,H,chh/cw,fps);
   ctx.globalCompositeOperation='source-over';ctx.fillStyle=bg;ctx.fillRect(0,0,vw,vh);
   for(const[x,y,p]of sky){const v=70+70*M.sin(t*2+p)|0;ctx.fillStyle=`rgb(${v},${v},${v+20})`;ctx.fillRect(x*vw,y*vh,1.5,1.5)}
   ctx.globalCompositeOperation='lighter';
