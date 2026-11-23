@@ -1,0 +1,35 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 16px;
+    font-family: system-ui, sans-serif;
+    background-color: rgb(rgb(41, 41, 41));
+}
+
+header {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.logo {
+    width: 120px;
+    height: auto;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 pictures per line */
+    gap: 12px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.gallery img {
+    width: 100%;
+    aspect-ratio: 1 / 1;   /* all pictures the same square size */
+    object-fit: cover;     /* crops instead of stretching */
+    border-radius: 8px;
+}
