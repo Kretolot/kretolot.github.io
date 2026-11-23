@@ -3,8 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<link rel="icon" type="image/x-icon" href="logo.png">
-<title>Meow Meow Meow</title>
+<title>Tulips</title>
 <style>
 :root {
   box-sizing: border-box;
@@ -12,7 +11,7 @@
   padding-bottom: env(safe-area-inset-bottom, 0px);
   --bg: #f4eff6; --ink: #3b2f47; --muted: #7a6c88;
   --btn-bg: #3b2f47; --btn-fg: #f4eff6;
-  --c0: #e5484d; --c1: #ec5fa6; --c2: #eba511; --c3: #f06a2a; --c4: #c23b9a;
+  --c0: #ff8fc2; --c1: #f5559f; --c2: #ffb3d6; --c3: #d92a7e; --c4: #ee75b3;
   --c5: #3a9a58; --c6: #8b7a9e; --c7: #d8407a; --c8: #a99bb8; --c9: #2f8a4c;
 }
 @media (prefers-color-scheme: dark) {
@@ -27,8 +26,8 @@
   --btn-bg: #efe7f5; --btn-fg: #19141f;
   --c5: #62c07a; --c6: #bba9d0; --c7: #ff6aa0; --c8: #8f81a0; --c9: #4fae6a;
 }
-:root[data-pal="1"] { --c0: #f08a1c; --c1: #d3304a; --c2: #b3358c; --c3: #f2b632; --c4: #e8554a; }
-:root[data-pal="2"] { --c0: #8f5fd6; --c1: #5b80e6; --c2: #e585cf; --c3: #6a4bc4; --c4: #4f9be0; }
+:root[data-pal="1"] { --c0: #ff9aa9; --c1: #f0607a; --c2: #ffc0c8; --c3: #d2406a; --c4: #e8809a; }
+:root[data-pal="2"] { --c0: #e48ae8; --c1: #c653c8; --c2: #f0b4f2; --c3: #a63aa8; --c4: #d878dc; }
 
 *, *::before, *::after { box-sizing: inherit; }
 html { scroll-padding-top: env(safe-area-inset-top, 0px); }
@@ -58,11 +57,10 @@ button:focus-visible, #bouquet:focus-visible { outline: 3px solid var(--c1); out
 </style>
 </head>
 <body>
-<h3>Tulipanki dla ładnej koleżanki :)</h3>
-<h4>Jebać i sie nie bać</h4>
+<h1>Tulips</h1>
 <pre id="bouquet" role="img" aria-label="A spinning bouquet of five ASCII tulips wrapped in paper with a ribbon" tabindex="0"></pre>
-<p class="hint">Naciśnij żeby zmienić kolorki.</p>
-<button id="btn" type="button">Zmień kolor</button>
+<p class="hint">Tap the bouquet to change the colors.</p>
+<button id="btn" type="button">Change colors</button>
 
 <script>
 (function () {
