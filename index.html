@@ -218,7 +218,7 @@ button:focus-visible, #bouquet:focus-visible { outline: 3px solid var(--c1); out
 
   function loop(now) {
     if (now - last > 33) {
-      theta += Math.min(0.1, (now - last) / 1000) * 0.15;
+      theta += Math.min(0.1, (now - last) / 1000) * 0.05;
       last = now; frame(theta);
     }
     requestAnimationFrame(loop);
