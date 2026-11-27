@@ -8,47 +8,42 @@
     <title>Meow Meow Meow</title>
 </head>
 <body>
+    <nav>
+        <a href="index.html">Kwiatki</a>
+        <a href="indexKoty.html" aria-current="page">Kotki i pieski</a>
+    </nav>
     <header>
-        <h1>Kotki małe</h1>
+        <h1>Zwierzątka małe i mniejsze</h1>
     </header>
 
-    <main class="gallery">
-        <img src="pictures/salvaje1.jpg" alt="Salvaje 1">
-        <img src="pictures/salvaje2.jpg" alt="Salvaje 2">
-        <img src="pictures/salvaje3.jpg" alt="Salvaje 1">
-        <img src="pictures/salvaje4.jpg" alt="Salvaje 2">
-        <img src="pictures/salvaje5.jpg" alt="Salvaje 1">
-        <img src="pictures/salvaje6.jpg" alt="Salvaje 2">
-        <img src="pictures/salvaje7.jpg" alt="Salvaje 1">
-        <img src="pictures/salvaje8.jpg" alt="Salvaje 2">
-        <img src="pictures/salvaje9.jpg" alt="Salvaje 1">
-        <img src="pictures/salvaje10.jpg" alt="Salvaje 2">
-        <img src="pictures/salvaje11.jpg" alt="Salvaje 1">
-        <img src="pictures/salvaje12.jpg" alt="Salvaje 2">
-        <img src="pictures/salvaje13.jpg" alt="Salvaje 2">
-        <img src="pictures/rojo1.jpg" alt="Salvaje 1">
-        <img src="pictures/rojo2.jpg" alt="Salvaje 1">
-        <img src="pictures/rojo3.jpg" alt="Salvaje 1">
-        <img src="pictures/rojo4.jpg" alt="Salvaje 1">
-        <img src="pictures/rojo5.jpg" alt="Salvaje 1">
-        <img src="pictures/rojo6.jpg" alt="Salvaje 1">
-        <img src="pictures/rojo7.jpg" alt="Salvaje 1">
-        <img src="pictures/rojo8.jpg" alt="Salvaje 1">
-        <img src="pictures/rojo9.jpg" alt="Salvaje 1">
-        <img src="pictures/rojo10.jpg" alt="Salvaje 1">
-        <img src="pictures/rojo11.jpg" alt="Salvaje 1">
-        <img src="pictures/rojo12.jpg" alt="Salvaje 1">
-        <img src="pictures/rojo13.jpg" alt="Salvaje 1">
-    </main>
-    <a href="index.html">A tu masz do kwiatkow</a>
-        <script>
-        const gallery = document.querySelector('.gallery');
-        const imgs = Array.from(gallery.children);
-        for (let i = imgs.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [imgs[i], imgs[j]] = [imgs[j], imgs[i]];
+    <main class="gallery"></main>
+    <script>
+    const gallery = document.querySelector('.gallery');
+    const sets = [
+        { name: 'salvaje', count: 13 },
+        { name: 'rojo', count: 12 },
+        { name: 'slodziak', count: 9 },
+        { name: 'zoltan', count: 10 },
+        { name: 'dingo', count: 1 }
+    ];
+
+    const images = [];
+    for (const set of sets) {
+        for (let i = 1; i <= set.count; i++) {
+            const img = document.createElement('img');
+            img.src = `pictures/${set.name}${i}.jpg`;
+            img.alt = `${set.name} ${i}`;
+            img.loading = 'lazy';
+            images.push(img);
         }
-        imgs.forEach(img => gallery.appendChild(img));
-    </script>
+    }
+
+    for (let i = images.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [images[i], images[j]] = [images[j], images[i]];
+    }
+
+    images.forEach(img => gallery.appendChild(img));
+</script>
 </body>
 </html>
