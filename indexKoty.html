@@ -17,9 +17,6 @@
     </header>
 
     <main class="gallery"></main>
-    <div class="lightbox" id="lightbox">
-        <img alt="">
-    </div>
     <script>
     const gallery = document.querySelector('.gallery');
     const sets = [
@@ -47,23 +44,6 @@
     }
 
     images.forEach(img => gallery.appendChild(img));
-
-    const lightbox = document.getElementById('lightbox');
-    const bigImg = lightbox.querySelector('img');
-
-    gallery.addEventListener('click', e => {
-        if (e.target.tagName === 'IMG') {
-            bigImg.src = e.target.src;
-            bigImg.alt = e.target.alt;
-            lightbox.classList.add('open');
-        }
-    });
-
-    lightbox.addEventListener('click', () => lightbox.classList.remove('open'));
-
-    document.addEventListener('keydown', e => {
-        if (e.key === 'Escape') lightbox.classList.remove('open');
-    });
 </script>
 </body>
 </html>
